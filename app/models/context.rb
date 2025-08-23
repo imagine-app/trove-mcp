@@ -6,4 +6,8 @@ class Context < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :autotag, inclusion: { in: [ true, false ] }
+
+  def entries_count
+    entries.count
+  end
 end
