@@ -10,14 +10,135 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_23_202452) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_23_210528) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "users", force: :cascade do |t|
-    t.string "email"
-    t.string "password_digest"
+  create_table "api_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vault_id", null: false
+    t.string "token", null: false
+    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vault_id"], name: "index_api_keys_on_vault_id"
+  end
+
+  create_table "contexts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vault_id", null: false
+    t.string "name", null: false
+    t.string "description", null: false
+    t.boolean "autotag", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vault_id"], name: "index_contexts_on_vault_id"
+  end
+
+  create_table "contexts_entries", id: false, force: :cascade do |t|
+    t.uuid "context_id", null: false
+    t.uuid "entry_id", null: false
+    t.index ["context_id", "entry_id"], name: "index_contexts_entries_on_context_id_and_entry_id", unique: true
+    t.index ["entry_id", "context_id"], name: "index_contexts_entries_on_entry_id_and_context_id"
+  end
+
+  create_table "emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "mailbox_id", null: false
+    t.string "to", null: false
+    t.string "cc"
+    t.string "from", null: false
+    t.string "subject"
+    t.text "body", null: false
+    t.datetime "received_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["mailbox_id", "received_at"], name: "index_emails_on_mailbox_id_and_received_at"
+    t.index ["mailbox_id"], name: "index_emails_on_mailbox_id"
+  end
+
+  create_table "entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vault_id", null: false
+    t.string "title"
+    t.text "description"
+    t.string "entriable_type", null: false
+    t.uuid "entriable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["entriable_type", "entriable_id"], name: "index_entries_on_entriable"
+    t.index ["entriable_type", "entriable_id"], name: "index_entries_on_entriable_type_and_entriable_id"
+    t.index ["vault_id", "entriable_type"], name: "index_entries_on_vault_id_and_entriable_type"
+    t.index ["vault_id"], name: "index_entries_on_vault_id"
+  end
+
+  create_table "external_api_keys", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vault_id", null: false
+    t.string "name", null: false
+    t.string "service_key", null: false
+    t.datetime "expires_at", precision: nil, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_key"], name: "index_external_api_keys_on_service_key", unique: true
+    t.index ["vault_id"], name: "index_external_api_keys_on_vault_id"
+  end
+
+  create_table "links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "url", null: false
+    t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "mailboxes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "vault_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["vault_id"], name: "index_mailboxes_on_vault_id"
+  end
+
+  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "vault_id", null: false
+    t.integer "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "vault_id"], name: "index_memberships_on_user_id_and_vault_id", unique: true
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+    t.index ["vault_id"], name: "index_memberships_on_vault_id"
+  end
+
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "prompts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "context_id", null: false
+    t.text "text", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["context_id"], name: "index_prompts_on_context_id"
+  end
+
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email", null: false
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "vaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "api_keys", "vaults"
+  add_foreign_key "contexts", "vaults"
+  add_foreign_key "emails", "mailboxes"
+  add_foreign_key "entries", "vaults"
+  add_foreign_key "external_api_keys", "vaults"
+  add_foreign_key "mailboxes", "vaults"
+  add_foreign_key "memberships", "users"
+  add_foreign_key "memberships", "vaults"
+  add_foreign_key "prompts", "contexts"
 end
