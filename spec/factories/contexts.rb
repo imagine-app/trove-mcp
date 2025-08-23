@@ -3,6 +3,6 @@ FactoryBot.define do
     vault
     name { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
-    autotag { [true, false].sample }
+    autotag { [ true, false ].sample }
   end
 end

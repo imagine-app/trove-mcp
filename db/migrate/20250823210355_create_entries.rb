@@ -9,7 +9,7 @@ class CreateEntries < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :entries, [:vault_id, :entriable_type]
-    add_index :entries, [:entriable_type, :entriable_id]
+    add_index :entries, [ :vault_id, :entriable_type ]
+    add_index :entries, [ :entriable_type, :entriable_id ]
   end
 end

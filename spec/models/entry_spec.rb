@@ -36,9 +36,17 @@ RSpec.describe Entry, type: :model do
       message = create(:message)
       entry = create(:entry, vault: vault, entriable: message)
       context = create(:context, vault: vault)
-      
+
       entry.contexts << context
       expect(entry.contexts).to include(context)
+    end
+
+    it 'allows contexts to find associated entries' do
+      message = create(:message)
+      entry = create(:entry, vault: vault, entriable: message)
+      context = create(:context, vault: vault)
+
+      entry.contexts << context
       expect(context.entries).to include(entry)
     end
   end

@@ -12,6 +12,6 @@ class CreateEmails < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :emails, [:mailbox_id, :received_at]
+    add_index :emails, [ :mailbox_id, :received_at ]
   end
 end

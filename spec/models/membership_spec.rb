@@ -17,7 +17,7 @@ RSpec.describe Membership, type: :model do
       user = create(:user)
       vault = create(:vault)
       create(:membership, user: user, vault: vault)
-      
+
       duplicate = build(:membership, user: user, vault: vault)
       expect(duplicate).not_to be_valid
     end
@@ -25,7 +25,7 @@ RSpec.describe Membership, type: :model do
 
   describe 'enums' do
     it 'defines reader and manager roles' do
-      expect(Membership.roles).to eq({ 'reader' => 0, 'manager' => 1 })
+      expect(described_class.roles).to eq({ 'reader' => 0, 'manager' => 1 })
     end
   end
 end
