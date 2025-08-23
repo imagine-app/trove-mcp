@@ -1,24 +1,57 @@
-# README
+# Trove MCP
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Espace de stockage personnel facilement accessible via IA pour organiser et retrouver vos données importantes.
 
-Things you may want to cover:
+## 📋 Objectif
 
-* Ruby version
+Centraliser et rendre facilement accessible via intelligence artificielle :
+- **Données famille** : passeports, dates de naissance, documents personnels
+- **Données entreprise** : KBIS, logos, statuts, factures, bilans
+- **Données foyer** : garanties, manuels d'instruction, contrats
 
-* System dependencies
+## 🛠 Stack technique
 
-* Configuration
+- **Backend** : Ruby 3.4+ / Rails 8.0+
+- **Base de données** : PostgreSQL
+- **Frontend** : Vite + React + TypeScript
+- **Styling** : Tailwind CSS v4 + Shadcn/ui
+- **Tests** : RSpec + FactoryBot
+- **Linting** : Rubocop (omakase) + rubocop-performance + rubocop-rspec
 
-* Database creation
+## 🚀 Installation
 
-* Database initialization
+```bash
+# Cloner le repository
+git clone https://github.com/imagine-app/trove-mcp.git
+cd trove-mcp
 
-* How to run the test suite
+# Installer les dépendances
+bundle install
+npm install
 
-* Services (job queues, cache servers, search engines, etc.)
+# Configurer la base de données
+rails db:create db:migrate
 
-* Deployment instructions
+# Démarrer le serveur de développement
+bin/dev
+```
 
-* ...
+## 🧪 Tests
+
+```bash
+# Lancer tous les tests
+bundle exec rspec
+
+# Linting
+bundle exec rubocop
+```
+
+## 🏗 Architecture
+
+- **Authentification** : Rails native (sans Devise)
+- **API** : Pour intégration MCP
+- **Structure** : MVC classique Rails avec frontend React moderne
+
+## 📚 Documentation
+
+Voir [CLAUDE.md](./CLAUDE.md) pour les préférences de développement et conventions du projet.
