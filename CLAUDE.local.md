@@ -1,0 +1,1 @@
+- Run rubocop autofix before commiting
