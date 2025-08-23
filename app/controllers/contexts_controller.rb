@@ -1,7 +1,7 @@
 class ContextsController < ApplicationController
   before_action :require_login
   before_action :set_vault
-  before_action :set_context, only: [:show, :edit, :update, :destroy, :add_entry, :remove_entry]
+  before_action :set_context, only: [ :show, :edit, :update, :destroy, :add_entry, :remove_entry ]
 
   def index
     @contexts = @vault.contexts
@@ -17,9 +17,9 @@ class ContextsController < ApplicationController
 
   def create
     @context = @vault.contexts.build(context_params)
-    
+
     if @context.save
-      redirect_to [@vault, @context], notice: 'Context was successfully created.'
+      redirect_to [ @vault, @context ], notice: "Context was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -30,7 +30,7 @@ class ContextsController < ApplicationController
 
   def update
     if @context.update(context_params)
-      redirect_to [@vault, @context], notice: 'Context was successfully updated.'
+      redirect_to [ @vault, @context ], notice: "Context was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -38,19 +38,19 @@ class ContextsController < ApplicationController
 
   def destroy
     @context.destroy
-    redirect_to [@vault, :contexts], notice: 'Context was successfully deleted.'
+    redirect_to [ @vault, :contexts ], notice: "Context was successfully deleted."
   end
 
   def add_entry
     @entry = @vault.entries.find(params[:entry_id])
     @context.entries << @entry unless @context.entries.include?(@entry)
-    redirect_to [@vault, @context], notice: 'Entry added to context.'
+    redirect_to [ @vault, @context ], notice: "Entry added to context."
   end
 
   def remove_entry
     @entry = @context.entries.find(params[:entry_id])
     @context.entries.delete(@entry)
-    redirect_to [@vault, @context], notice: 'Entry removed from context.'
+    redirect_to [ @vault, @context ], notice: "Entry removed from context."
   end
 
   private
@@ -69,7 +69,7 @@ class ContextsController < ApplicationController
 
   def require_login
     unless current_user
-      redirect_to login_path, alert: 'You must be logged in to access this page.'
+      redirect_to login_path, alert: "You must be logged in to access this page."
     end
   end
 

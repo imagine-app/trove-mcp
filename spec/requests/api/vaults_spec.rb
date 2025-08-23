@@ -13,7 +13,7 @@ RSpec.describe "Api::Vaults", type: :request do
   describe "GET /api/vaults" do
     it "returns user's vaults" do
       get api_vaults_path, headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:success)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an(Array)
@@ -29,7 +29,7 @@ RSpec.describe "Api::Vaults", type: :request do
       expect {
         post api_vaults_path, params: valid_params, headers: { 'Accept' => 'application/json' }
       }.to change(Vault, :count).by(1)
-      
+
       expect(response).to have_http_status(:created)
       json_response = JSON.parse(response.body)
       expect(json_response['name']).to eq("Test Vault")
@@ -37,7 +37,7 @@ RSpec.describe "Api::Vaults", type: :request do
 
     it "returns errors for invalid params" do
       post api_vaults_path, params: { vault: { name: "" } }, headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:unprocessable_entity)
       json_response = JSON.parse(response.body)
       expect(json_response).to have_key('errors')
@@ -46,9 +46,9 @@ RSpec.describe "Api::Vaults", type: :request do
 
   describe "PUT /api/vaults/:id" do
     it "updates the vault" do
-      put api_vault_path(vault), params: { vault: { name: "Updated Name" } }, 
+      put api_vault_path(vault), params: { vault: { name: "Updated Name" } },
           headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:success)
       vault.reload
       expect(vault.name).to eq("Updated Name")
@@ -60,7 +60,7 @@ RSpec.describe "Api::Vaults", type: :request do
       expect {
         delete api_vault_path(vault), headers: { 'Accept' => 'application/json' }
       }.to change(Vault, :count).by(-1)
-      
+
       expect(response).to have_http_status(:no_content)
     end
   end
@@ -73,7 +73,7 @@ RSpec.describe "Api::Vaults", type: :request do
 
     it "requires authentication" do
       get api_vaults_path, headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:unauthorized)
       json_response = JSON.parse(response.body)
       expect(json_response['error']).to eq("Authentication required")

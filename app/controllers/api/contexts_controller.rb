@@ -1,10 +1,10 @@
 class Api::ContextsController < Api::ApplicationController
   before_action :set_vault
-  before_action :set_context, only: [:show, :update, :destroy]
+  before_action :set_context, only: [ :show, :update, :destroy ]
 
   def index
     @contexts = @vault.contexts
-    render json: @contexts.as_json(methods: [:entries_count])
+    render json: @contexts.as_json(methods: [ :entries_count ])
   end
 
   def show
@@ -13,7 +13,7 @@ class Api::ContextsController < Api::ApplicationController
 
   def create
     @context = @vault.contexts.build(context_params)
-    
+
     if @context.save
       render json: @context, status: :created
     else
@@ -36,7 +36,7 @@ class Api::ContextsController < Api::ApplicationController
 
   def add_entry
     @entry = @vault.entries.find_by(id: params[:entry_id])
-    
+
     if @entry
       @context.entries << @entry unless @context.entries.include?(@entry)
       render json: { message: "Entry added to context" }
@@ -47,7 +47,7 @@ class Api::ContextsController < Api::ApplicationController
 
   def remove_entry
     @entry = @context.entries.find_by(id: params[:entry_id])
-    
+
     if @entry
       @context.entries.delete(@entry)
       render json: { message: "Entry removed from context" }

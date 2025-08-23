@@ -1,7 +1,7 @@
 class EntriesController < ApplicationController
   before_action :require_login
   before_action :set_vault
-  before_action :set_entry, only: [:show, :edit, :update, :destroy]
+  before_action :set_entry, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @entries = @vault.entries.includes(:entriable)
@@ -12,27 +12,27 @@ class EntriesController < ApplicationController
 
   def new
     @entry = @vault.entries.build
-    @entry_type = params[:type] || 'Message'
+    @entry_type = params[:type] || "Message"
   end
 
   def create
     @entry = @vault.entries.build(entry_params.except(:entriable_attributes, :type))
     @entry_type = entry_params[:type]
-    
+
     # Handle delegated type creation
     case @entry_type
-    when 'Email'
+    when "Email"
       mailbox = @vault.mailboxes.first || @vault.mailboxes.create!
       email = Email.new(entry_params[:entriable_attributes].merge(mailbox: mailbox))
       @entry.entriable = email
-    when 'Message'
+    when "Message"
       @entry.entriable = Message.new(entry_params[:entriable_attributes])
-    when 'Link'
+    when "Link"
       @entry.entriable = Link.new(entry_params[:entriable_attributes])
     end
 
     if @entry.save
-      redirect_to [@vault, @entry], notice: 'Entry was successfully created.'
+      redirect_to [ @vault, @entry ], notice: "Entry was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -48,7 +48,7 @@ class EntriesController < ApplicationController
       if entry_params[:entriable_attributes].present?
         @entry.entriable.update(entry_params[:entriable_attributes])
       end
-      redirect_to [@vault, @entry], notice: 'Entry was successfully updated.'
+      redirect_to [ @vault, @entry ], notice: "Entry was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -56,7 +56,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry.destroy
-    redirect_to [@vault, :entries], notice: 'Entry was successfully deleted.'
+    redirect_to [ @vault, :entries ], notice: "Entry was successfully deleted."
   end
 
   private
@@ -70,13 +70,13 @@ class EntriesController < ApplicationController
   end
 
   def entry_params
-    params.require(:entry).permit(:title, :description, :type, 
-                                  entriable_attributes: [:text, :url, :title, :to, :from, :subject, :body, :cc, :received_at])
+    params.require(:entry).permit(:title, :description, :type,
+                                  entriable_attributes: [ :text, :url, :title, :to, :from, :subject, :body, :cc, :received_at ])
   end
 
   def require_login
     unless current_user
-      redirect_to login_path, alert: 'You must be logged in to access this page.'
+      redirect_to login_path, alert: "You must be logged in to access this page."
     end
   end
 

@@ -1,5 +1,5 @@
 class Api::VaultsController < Api::ApplicationController
-  before_action :set_vault, only: [:show, :update, :destroy]
+  before_action :set_vault, only: [ :show, :update, :destroy ]
 
   def index
     @vaults = @current_user_vaults
@@ -12,7 +12,7 @@ class Api::VaultsController < Api::ApplicationController
 
   def create
     @vault = Vault.new(vault_params)
-    
+
     if @vault.save
       # Add current user as manager
       @vault.memberships.create!(user: current_user, role: :manager)

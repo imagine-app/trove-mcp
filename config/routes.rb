@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   # Authentication routes
-  resources :users, only: [:new, :create]
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :users, only: [ :new, :create ]
+  resources :sessions, only: [ :new, :create, :destroy ]
   get "login" => "sessions#new"
   get "logout" => "sessions#destroy"
 
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         delete :remove_entry
       end
     end
-    resources :mailboxes, only: [:index, :show, :create, :destroy]
+    resources :mailboxes, only: [ :index, :show, :create, :destroy ]
   end
 
   # API routes
@@ -32,7 +32,7 @@ Rails.application.routes.draw do
           delete :remove_entry
         end
       end
-      resources :mailboxes, only: [:index, :show, :create, :destroy]
+      resources :mailboxes, only: [ :index, :show, :create, :destroy ]
     end
   end
 

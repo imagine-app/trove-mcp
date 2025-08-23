@@ -13,7 +13,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
   describe "GET /api/vaults/:vault_id/mailboxes" do
     it "returns vault's mailboxes" do
       get api_vault_mailboxes_path(vault), headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:success)
       json_response = JSON.parse(response.body)
       expect(json_response).to be_an(Array)
@@ -23,7 +23,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
 
     it "includes basic mailbox details" do
       get api_vault_mailboxes_path(vault), headers: { 'Accept' => 'application/json' }
-      
+
       json_response = JSON.parse(response.body)
       mailbox_data = json_response.first
       expect(mailbox_data).to have_key('vault_id')
@@ -43,7 +43,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
       expect {
         post api_vault_mailboxes_path(vault), params: valid_params, headers: { 'Accept' => 'application/json' }
       }.to change(Mailbox, :count).by(1)
-      
+
       expect(response).to have_http_status(:created)
       json_response = JSON.parse(response.body)
       expect(json_response['vault_id']).to eq(vault.id)
@@ -53,7 +53,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
   describe "GET /api/vaults/:vault_id/mailboxes/:id" do
     it "returns the mailbox" do
       get api_vault_mailbox_path(vault, mailbox), headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:success)
       json_response = JSON.parse(response.body)
       expect(json_response['id']).to eq(mailbox.id)
@@ -63,10 +63,10 @@ RSpec.describe "Api::Mailboxes", type: :request do
 
   describe "PUT /api/vaults/:vault_id/mailboxes/:id" do
     it "updates the mailbox" do
-      put api_vault_mailbox_path(vault, mailbox), 
-          params: { mailbox: {} }, 
+      put api_vault_mailbox_path(vault, mailbox),
+          params: { mailbox: {} },
           headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:success)
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
       expect {
         delete api_vault_mailbox_path(vault, mailbox), headers: { 'Accept' => 'application/json' }
       }.to change(Mailbox, :count).by(-1)
-      
+
       expect(response).to have_http_status(:no_content)
     end
   end
@@ -89,7 +89,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
 
     it "restricts access to mailboxes from other vaults" do
       get api_vault_mailbox_path(other_vault, other_mailbox), headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:forbidden)
       json_response = JSON.parse(response.body)
       expect(json_response['error']).to eq("Access denied")
@@ -103,7 +103,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
 
     it "requires authentication" do
       get api_vault_mailboxes_path(vault), headers: { 'Accept' => 'application/json' }
-      
+
       expect(response).to have_http_status(:unauthorized)
       json_response = JSON.parse(response.body)
       expect(json_response['error']).to eq("Authentication required")

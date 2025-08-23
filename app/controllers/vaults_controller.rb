@@ -1,6 +1,6 @@
 class VaultsController < ApplicationController
   before_action :require_login
-  before_action :set_vault, only: [:show, :edit, :update, :destroy]
+  before_action :set_vault, only: [ :show, :edit, :update, :destroy ]
 
   def index
     @vaults = current_user.vaults
@@ -17,10 +17,10 @@ class VaultsController < ApplicationController
 
   def create
     @vault = Vault.new(vault_params)
-    
+
     if @vault.save
       @vault.memberships.create!(user: current_user, role: :manager)
-      redirect_to @vault, notice: 'Vault was successfully created.'
+      redirect_to @vault, notice: "Vault was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class VaultsController < ApplicationController
 
   def update
     if @vault.update(vault_params)
-      redirect_to @vault, notice: 'Vault was successfully updated.'
+      redirect_to @vault, notice: "Vault was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -39,7 +39,7 @@ class VaultsController < ApplicationController
 
   def destroy
     @vault.destroy
-    redirect_to vaults_url, notice: 'Vault was successfully deleted.'
+    redirect_to vaults_url, notice: "Vault was successfully deleted."
   end
 
   private
@@ -54,7 +54,7 @@ class VaultsController < ApplicationController
 
   def require_login
     unless current_user
-      redirect_to login_path, alert: 'You must be logged in to access this page.'
+      redirect_to login_path, alert: "You must be logged in to access this page."
     end
   end
 

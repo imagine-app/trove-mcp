@@ -1,6 +1,6 @@
 class Api::MailboxesController < Api::ApplicationController
   before_action :set_vault
-  before_action :set_mailbox, only: [:show, :destroy]
+  before_action :set_mailbox, only: [ :show, :destroy ]
 
   def index
     @mailboxes = @vault.mailboxes.includes(:emails)

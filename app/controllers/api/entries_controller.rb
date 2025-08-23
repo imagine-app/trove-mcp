@@ -1,6 +1,6 @@
 class Api::EntriesController < Api::ApplicationController
   before_action :set_vault
-  before_action :set_entry, only: [:show, :update, :destroy]
+  before_action :set_entry, only: [ :show, :update, :destroy ]
 
   def index
     @entries = @vault.entries.includes(:entriable)
@@ -13,16 +13,16 @@ class Api::EntriesController < Api::ApplicationController
 
   def create
     @entry = @vault.entries.build(entry_params.except(:entriable_attributes, :type))
-    
+
     # Handle delegated type creation
     case entry_params[:type]
-    when 'Email'
+    when "Email"
       mailbox = @vault.mailboxes.first || @vault.mailboxes.create!
       email = Email.new(entry_params[:entriable_attributes].merge(mailbox: mailbox))
       @entry.entriable = email
-    when 'Message'
+    when "Message"
       @entry.entriable = Message.new(entry_params[:entriable_attributes])
-    when 'Link'
+    when "Link"
       @entry.entriable = Link.new(entry_params[:entriable_attributes])
     else
       render json: { error: "Invalid entry type" }, status: :bad_request
@@ -66,8 +66,8 @@ class Api::EntriesController < Api::ApplicationController
   end
 
   def entry_params
-    params.require(:entry).permit(:title, :description, :type, 
-                                  entriable_attributes: [:text, :url, :title, :to, :from, :subject, :body, :cc, :received_at])
+    params.require(:entry).permit(:title, :description, :type,
+                                  entriable_attributes: [ :text, :url, :title, :to, :from, :subject, :body, :cc, :received_at ])
   end
 
   def serialize_entry(entry)
