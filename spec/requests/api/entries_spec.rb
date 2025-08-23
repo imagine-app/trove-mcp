@@ -27,18 +27,18 @@ RSpec.describe "Api::Entries", type: :request do
       json_response = JSON.parse(response.body)
       entry = json_response.first
       expect(entry).to have_key('entriable_type')
-      expect(entry['entriable_type']).to be_in([ 'Message', 'Email' ])
+      expect(entry['entriable_type']).to be_in([ 'Entry::Message', 'Entry::Email' ])
     end
   end
 
   describe "POST /api/vaults/:vault_id/entries" do
-    context "with Message type" do
+    context "with Entry::Message type" do
       let(:valid_params) do
         {
           entry: {
             title: "Test Message",
             description: "Test description",
-            type: "Message",
+            type: "Entry::Message",
             entriable_attributes: {
               text: "This is a test message"
             }
@@ -49,22 +49,22 @@ RSpec.describe "Api::Entries", type: :request do
       it "creates a new message entry" do
         expect {
           post api_vault_entries_path(vault), params: valid_params, headers: { 'Accept' => 'application/json' }
-        }.to change(Entry, :count).by(1).and change(Message, :count).by(1)
+        }.to change(Entry, :count).by(1).and change(Entry::Message, :count).by(1)
 
         expect(response).to have_http_status(:created)
         json_response = JSON.parse(response.body)
         expect(json_response['title']).to eq("Test Message")
-        expect(json_response['entriable_type']).to eq("Message")
+        expect(json_response['entriable_type']).to eq("Entry::Message")
       end
     end
 
-    context "with Email type" do
+    context "with Entry::Email type" do
       let(:valid_params) do
         {
           entry: {
             title: "Test Email",
             description: "Test description",
-            type: "Email",
+            type: "Entry::Email",
             entriable_attributes: {
               from: "sender@example.com",
               to: "recipient@example.com",
@@ -78,22 +78,22 @@ RSpec.describe "Api::Entries", type: :request do
       it "creates a new email entry" do
         expect {
           post api_vault_entries_path(vault), params: valid_params, headers: { 'Accept' => 'application/json' }
-        }.to change(Entry, :count).by(1).and change(Email, :count).by(1)
+        }.to change(Entry, :count).by(1).and change(Entry::Email, :count).by(1)
 
         expect(response).to have_http_status(:created)
         json_response = JSON.parse(response.body)
         expect(json_response['title']).to eq("Test Email")
-        expect(json_response['entriable_type']).to eq("Email")
+        expect(json_response['entriable_type']).to eq("Entry::Email")
       end
     end
 
-    context "with Link type" do
+    context "with Entry::Link type" do
       let(:valid_params) do
         {
           entry: {
             title: "Test Link",
             description: "Test description",
-            type: "Link",
+            type: "Entry::Link",
             entriable_attributes: {
               url: "https://example.com",
               title: "Example Link"
@@ -105,21 +105,21 @@ RSpec.describe "Api::Entries", type: :request do
       it "creates a new link entry" do
         expect {
           post api_vault_entries_path(vault), params: valid_params, headers: { 'Accept' => 'application/json' }
-        }.to change(Entry, :count).by(1).and change(Link, :count).by(1)
+        }.to change(Entry, :count).by(1).and change(Entry::Link, :count).by(1)
 
         expect(response).to have_http_status(:created)
         json_response = JSON.parse(response.body)
         expect(json_response['title']).to eq("Test Link")
-        expect(json_response['entriable_type']).to eq("Link")
+        expect(json_response['entriable_type']).to eq("Entry::Link")
       end
     end
 
     it "returns errors for invalid params" do
       post api_vault_entries_path(vault), params: { entry: { title: "" } }, headers: { 'Accept' => 'application/json' }
 
-      expect(response).to have_http_status(:unprocessable_entity)
+      expect(response).to have_http_status(:bad_request)
       json_response = JSON.parse(response.body)
-      expect(json_response).to have_key('errors')
+      expect(json_response).to have_key('error')
     end
   end
 

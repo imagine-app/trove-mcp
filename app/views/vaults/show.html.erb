@@ -16,11 +16,11 @@
         <div class="flex justify-between items-center">
           <h3 class="text-lg leading-6 font-medium text-gray-900">Recent Entries</h3>
           <div class="flex space-x-2">
-            <%= link_to "New Message", new_vault_entry_path(@vault, type: 'Message'), 
+            <%= link_to "New Message", new_vault_entry_path(@vault, type: 'Entry::Message'), 
                   class: "bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded" %>
-            <%= link_to "New Email", new_vault_entry_path(@vault, type: 'Email'), 
+            <%= link_to "New Email", new_vault_entry_path(@vault, type: 'Entry::Email'), 
                   class: "bg-green-500 hover:bg-green-700 text-white text-sm font-bold py-1 px-3 rounded" %>
-            <%= link_to "New Link", new_vault_entry_path(@vault, type: 'Link'), 
+            <%= link_to "New Link", new_vault_entry_path(@vault, type: 'Entry::Link'), 
                   class: "bg-purple-500 hover:bg-purple-700 text-white text-sm font-bold py-1 px-3 rounded" %>
           </div>
         </div>
@@ -33,15 +33,15 @@
                 <div class="flex items-center space-x-3">
                   <div class="flex-shrink-0">
                     <% case entry.entriable_type %>
-                    <% when 'Email' %>
+                    <% when 'Entry::Email' %>
                       <div class="h-8 w-8 bg-green-100 rounded-full flex items-center justify-center">
                         <span class="text-green-600 font-medium text-sm">@</span>
                       </div>
-                    <% when 'Message' %>
+                    <% when 'Entry::Message' %>
                       <div class="h-8 w-8 bg-blue-100 rounded-full flex items-center justify-center">
                         <span class="text-blue-600 font-medium text-sm">M</span>
                       </div>
-                    <% when 'Link' %>
+                    <% when 'Entry::Link' %>
                       <div class="h-8 w-8 bg-purple-100 rounded-full flex items-center justify-center">
                         <span class="text-purple-600 font-medium text-sm">L</span>
                       </div>
@@ -49,7 +49,7 @@
                   </div>
                   <div class="flex-1 min-w-0">
                     <p class="text-sm font-medium text-gray-900 truncate">
-                      <%= entry.title.present? ? entry.title : "#{entry.entriable_type} entry" %>
+                      <%= entry.title.present? ? entry.title : "#{entry.entriable_type.split('::').last} entry" %>
                     </p>
                     <p class="text-sm text-gray-500 truncate">
                       <%= entry.description.present? ? entry.description : "No description" %>

@@ -1,13 +1,13 @@
 <div class="max-w-2xl mx-auto">
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold text-gray-900">New <%= @entry_type %> Entry</h1>
+    <h1 class="text-3xl font-bold text-gray-900">New <%= @entry_type.split('::').last %> Entry</h1>
     <div class="flex space-x-2">
-      <%= link_to "Message", new_vault_entry_path(@vault, type: 'Message'), 
-            class: "#{'bg-blue-500 text-white' if @entry_type == 'Message'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Message'} px-3 py-1 rounded text-sm" %>
-      <%= link_to "Email", new_vault_entry_path(@vault, type: 'Email'), 
-            class: "#{'bg-green-500 text-white' if @entry_type == 'Email'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Email'} px-3 py-1 rounded text-sm" %>
-      <%= link_to "Link", new_vault_entry_path(@vault, type: 'Link'), 
-            class: "#{'bg-purple-500 text-white' if @entry_type == 'Link'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Link'} px-3 py-1 rounded text-sm" %>
+      <%= link_to "Message", new_vault_entry_path(@vault, type: 'Entry::Message'), 
+            class: "#{'bg-blue-500 text-white' if @entry_type == 'Entry::Message'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Entry::Message'} px-3 py-1 rounded text-sm" %>
+      <%= link_to "Email", new_vault_entry_path(@vault, type: 'Entry::Email'), 
+            class: "#{'bg-green-500 text-white' if @entry_type == 'Entry::Email'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Entry::Email'} px-3 py-1 rounded text-sm" %>
+      <%= link_to "Link", new_vault_entry_path(@vault, type: 'Entry::Link'), 
+            class: "#{'bg-purple-500 text-white' if @entry_type == 'Entry::Link'} #{'bg-gray-200 text-gray-700' if @entry_type != 'Entry::Link'} px-3 py-1 rounded text-sm" %>
     </div>
   </div>
 
@@ -51,10 +51,10 @@
 
     <!-- Type-specific Fields -->
     <div class="border-t pt-6">
-      <h3 class="text-lg font-medium text-gray-900 mb-4"><%= @entry_type %> Details</h3>
+      <h3 class="text-lg font-medium text-gray-900 mb-4"><%= @entry_type.split('::').last %> Details</h3>
       
       <% case @entry_type %>
-      <% when 'Message' %>
+      <% when 'Entry::Message' %>
         <div>
           <%= label_tag "entry[entriable_attributes][text]", "Message Text", class: "block text-sm font-medium text-gray-700" %>
           <%= text_area_tag "entry[entriable_attributes][text]", nil, rows: 5,
@@ -62,7 +62,7 @@
                 placeholder: "Enter your message..." %>
         </div>
 
-      <% when 'Email' %>
+      <% when 'Entry::Email' %>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <%= label_tag "entry[entriable_attributes][from]", "From", class: "block text-sm font-medium text-gray-700" %>
@@ -99,7 +99,7 @@
                 placeholder: "Email body..." %>
         </div>
 
-      <% when 'Link' %>
+      <% when 'Entry::Link' %>
         <div>
           <%= label_tag "entry[entriable_attributes][url]", "URL", class: "block text-sm font-medium text-gray-700" %>
           <%= url_field_tag "entry[entriable_attributes][url]", nil,

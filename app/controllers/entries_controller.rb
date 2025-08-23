@@ -12,7 +12,7 @@ class EntriesController < ApplicationController
 
   def new
     @entry = @vault.entries.build
-    @entry_type = params[:type] || "Message"
+    @entry_type = params[:type] || "Entry::Message"
   end
 
   def create
@@ -21,14 +21,14 @@ class EntriesController < ApplicationController
 
     # Handle delegated type creation
     case @entry_type
-    when "Email"
+    when "Entry::Email"
       mailbox = @vault.mailboxes.first || @vault.mailboxes.create!
-      email = Email.new(entry_params[:entriable_attributes].merge(mailbox: mailbox))
+      email = Entry::Email.new(entry_params[:entriable_attributes].merge(mailbox: mailbox))
       @entry.entriable = email
-    when "Message"
-      @entry.entriable = Message.new(entry_params[:entriable_attributes])
-    when "Link"
-      @entry.entriable = Link.new(entry_params[:entriable_attributes])
+    when "Entry::Message"
+      @entry.entriable = Entry::Message.new(entry_params[:entriable_attributes])
+    when "Entry::Link"
+      @entry.entriable = Entry::Link.new(entry_params[:entriable_attributes])
     end
 
     if @entry.save

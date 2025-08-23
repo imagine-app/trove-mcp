@@ -1,4 +1,5 @@
-class Email < ApplicationRecord
+class Entry::Email < ApplicationRecord
+  self.table_name = "emails"
   include Entriable
 
   belongs_to :mailbox

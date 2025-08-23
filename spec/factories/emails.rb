@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :email do
+  factory :email, class: 'Entry::Email' do
     mailbox
     to { Faker::Internet.email }
     from { Faker::Internet.email }

@@ -12,19 +12,19 @@ RSpec.describe Entry, type: :model do
   end
 
   describe 'delegated types' do
-    it 'accepts Email as entriable' do
+    it 'accepts Entry::Email as entriable' do
       email = create(:email, mailbox: mailbox)
       entry = build(:entry, vault: vault, entriable: email)
       expect(entry).to be_valid
     end
 
-    it 'accepts Message as entriable' do
+    it 'accepts Entry::Message as entriable' do
       message = create(:message)
       entry = build(:entry, vault: vault, entriable: message)
       expect(entry).to be_valid
     end
 
-    it 'accepts Link as entriable' do
+    it 'accepts Entry::Link as entriable' do
       link = create(:link)
       entry = build(:entry, vault: vault, entriable: link)
       expect(entry).to be_valid
