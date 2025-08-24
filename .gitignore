@@ -27,7 +27,8 @@
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
-!/tmp/catalyst
+
+/tmp/catalyst
 
 /public/assets
 
