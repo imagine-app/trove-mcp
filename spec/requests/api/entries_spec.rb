@@ -8,7 +8,7 @@ RSpec.describe "Api::Entries", type: :request do
   let!(:email_entry) { create(:entry, :with_email, vault: vault) }
 
   before do
-    post sessions_path, params: { session: { email: user.email, password: "password123" } }
+    sign_in_api(user)
   end
 
   describe "GET /api/vaults/:vault_id/entries" do

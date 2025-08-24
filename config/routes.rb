@@ -8,9 +8,8 @@ Rails.application.routes.draw do
 
   # Authentication routes
   resources :users, only: [ :new, :create ]
-  resources :sessions, only: [ :new, :create, :destroy ]
   get "login" => "sessions#new"
-  get "logout" => "sessions#destroy"
+  delete "logout" => "sessions#destroy"
 
   # Main app routes (views)
   resources :vaults do
@@ -34,7 +33,7 @@ Rails.application.routes.draw do
           delete :remove_entry
         end
       end
-      resources :mailboxes, only: [ :index, :show, :create, :destroy ]
+      resources :mailboxes, only: [ :index, :show, :create, :update, :destroy ]
     end
   end
 

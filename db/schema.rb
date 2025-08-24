@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_24_142010) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_24_180953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -146,7 +146,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_24_142010) do
     t.index ["context_id"], name: "index_prompts_on_context_id"
   end
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "sessions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.string "ip_address"
     t.string "user_agent"

@@ -6,8 +6,7 @@ RSpec.describe "Api::Vaults", type: :request do
   let!(:membership) { create(:membership, user: user, vault: vault, role: :manager) }
 
   before do
-    # Simulate login
-    post sessions_path, params: { session: { email: user.email, password: "password123" } }
+    sign_in_api(user)
   end
 
   describe "GET /api/vaults" do

@@ -1,5 +1,4 @@
 class VaultsController < ApplicationController
-  before_action :require_login
   before_action :set_vault, only: [ :show, :edit, :update, :destroy ]
 
   def index
@@ -52,13 +51,7 @@ class VaultsController < ApplicationController
     params.require(:vault).permit(:name)
   end
 
-  def require_login
-    unless current_user
-      redirect_to login_path, alert: "You must be logged in to access this page."
-    end
-  end
-
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    Current.user
   end
 end

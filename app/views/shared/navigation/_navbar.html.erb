@@ -4,12 +4,21 @@
   
   <div class="flex items-center gap-3">
     <% if Current.user %>
-      <!-- User dropdown would go here -->
+      <!-- User info and logout -->
       <div class="relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium text-zinc-950 dark:text-white">
         <div class="size-7 rounded-lg bg-zinc-900 dark:bg-zinc-700 flex items-center justify-center">
-          <span class="text-white text-sm font-bold"><%= Current.user.email[0].upcase %></span>
+          <span class="text-white text-sm font-bold"><%= Current.user.email_address[0].upcase %></span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-sm font-medium text-zinc-950 dark:text-white">User</span>
+          <span class="text-xs text-zinc-500 dark:text-zinc-400"><%= Current.user.email_address %></span>
         </div>
       </div>
+      <%= link_to logout_path, method: :delete, 
+          class: "text-zinc-950 hover:text-zinc-700 dark:text-white dark:hover:text-zinc-300 text-sm font-medium ml-2 px-3 py-1 rounded border border-zinc-300 dark:border-zinc-600 hover:bg-zinc-50 dark:hover:bg-zinc-800",
+          confirm: "Are you sure you want to log out?" do %>
+        Logout
+      <% end %>
     <% else %>
       <%= link_to "Login", new_session_path, class: "text-zinc-950 hover:text-zinc-700 dark:text-white dark:hover:text-zinc-300 text-sm font-medium" %>
     <% end %>

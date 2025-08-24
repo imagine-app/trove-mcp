@@ -1,17 +1,26 @@
 class Api::ApplicationController < ApplicationController
-  before_action :authenticate_user
+  skip_before_action :require_authentication
+  before_action :authenticate_api_user
   before_action :set_current_user_vaults
 
   private
 
-  def authenticate_user
+  def authenticate_api_user
     unless current_user
       render json: { error: "Authentication required" }, status: :unauthorized
     end
   end
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    @current_user ||= begin
+      if (session_record = find_session_by_cookie)
+        session_record.user
+      end
+    end
+  end
+
+  def find_session_by_cookie
+    Session.find_by(id: cookies.signed[:session_id]) if cookies.signed[:session_id]
   end
 
   def set_current_user_vaults
@@ -24,5 +33,9 @@ class Api::ApplicationController < ApplicationController
 
   def render_not_found(message = "Resource not found")
     render json: { error: message }, status: :not_found
+  end
+
+  def render_forbidden(message = "Access denied")
+    render json: { error: message }, status: :forbidden
   end
 end

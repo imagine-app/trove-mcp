@@ -59,8 +59,17 @@ class Api::ContextsController < Api::ApplicationController
   private
 
   def set_vault
-    @vault = @current_user_vaults.find_by(id: params[:vault_id])
-    render_not_found("Vault not found") unless @vault
+    vault = Vault.find_by(id: params[:vault_id])
+    unless vault
+      render_not_found("Vault not found") 
+      return
+    end
+    
+    @vault = @current_user_vaults.find_by(id: vault.id)
+    unless @vault
+      render_forbidden("Access denied")
+      return
+    end
   end
 
   def set_context

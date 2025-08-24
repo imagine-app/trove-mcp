@@ -1,5 +1,4 @@
 class EntriesController < ApplicationController
-  before_action :require_login
   before_action :set_vault
   before_action :set_entry, only: [ :show, :edit, :update, :destroy ]
 
@@ -74,13 +73,7 @@ class EntriesController < ApplicationController
                                   entriable_attributes: [ :text, :url, :title, :to, :from, :subject, :body, :cc, :received_at ])
   end
 
-  def require_login
-    unless current_user
-      redirect_to login_path, alert: "You must be logged in to access this page."
-    end
-  end
-
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    Current.user
   end
 end

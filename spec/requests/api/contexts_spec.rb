@@ -7,7 +7,7 @@ RSpec.describe "Api::Contexts", type: :request do
   let!(:context) { create(:context, vault: vault) }
 
   before do
-    post sessions_path, params: { session: { email: user.email, password: "password123" } }
+    sign_in_api(user)
   end
 
   describe "GET /api/vaults/:vault_id/contexts" do
@@ -86,13 +86,14 @@ RSpec.describe "Api::Contexts", type: :request do
     end
 
     it "updates autotag setting" do
+      original_autotag = context.autotag
       put api_vault_context_path(vault, context),
-          params: { context: { autotag: !context.autotag } },
+          params: { context: { autotag: !original_autotag } },
           headers: { 'Accept' => 'application/json' }
 
       expect(response).to have_http_status(:success)
       context.reload
-      expect(context.autotag).to eq(!context.autotag)
+      expect(context.autotag).to eq(!original_autotag)
     end
   end
 

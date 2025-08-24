@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def current_user
-    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    Current.user
   end
   helper_method :current_user
 
@@ -14,13 +14,4 @@ class ApplicationController < ActionController::Base
     current_user.present?
   end
   helper_method :logged_in?
-
-  def require_login
-    unless logged_in?
-      respond_to do |format|
-        format.html { redirect_to new_session_path, alert: "Please log in to continue" }
-        format.json { render json: { error: "Authentication required" }, status: :unauthorized }
-      end
-    end
-  end
 end

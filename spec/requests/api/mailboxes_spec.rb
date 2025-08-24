@@ -7,7 +7,7 @@ RSpec.describe "Api::Mailboxes", type: :request do
   let!(:mailbox) { create(:mailbox, vault: vault) }
 
   before do
-    post sessions_path, params: { session: { email: user.email, password: "password123" } }
+    sign_in_api(user)
   end
 
   describe "GET /api/vaults/:vault_id/mailboxes" do
