@@ -4,6 +4,9 @@
 # belong in git's global ignore instead:
 # `$XDG_CONFIG_HOME/git/ignore` or `~/.config/git/ignore`
 
+# macOS
+.DS_Store
+
 # Ignore bundler config.
 /.bundle
 
@@ -41,4 +44,7 @@ node_modules
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
 *.local
+
+# Playwright MCP cache
+.playwright-mcp/
 

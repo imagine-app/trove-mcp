@@ -4,7 +4,18 @@
       "Bash(git:*)",
       "Bash(bundle:*)",
       "Bash(rails:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(grep:*)",
+      "Bash(RAILS_ENV=test rails:*)",
+      "mcp__playwright__browser_navigate",
+      "Bash(bin/dev:*)",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_click",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:hexdocs.pm)",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__playwright__browser_snapshot",
+      "Bash(pgrep:*)"
     ],
     "deny": [],
     "ask": []
