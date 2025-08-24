@@ -21,13 +21,13 @@ User.destroy_all
 # Create users
 puts "Creating users..."
 user_raphael = User.create!(
-  email: "raphael@example.com",
-  password: "password123"
+  email: "raphael@imagine-app.fr",
+  password: "testtest"
 )
 
 user_marie = User.create!(
   email: "marie@example.com",
-  password: "password123"
+  password: "testtest"
 )
 
 # Create vaults
