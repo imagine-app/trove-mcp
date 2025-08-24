@@ -7,11 +7,11 @@ module ApplicationHelper
       "dark:text-white dark:*:data-[slot=icon]:fill-zinc-400",
       "dark:hover:bg-white/5 dark:hover:*:data-[slot=icon]:fill-white"
     ]
-    
+
     if current
       classes << "bg-zinc-950/5 *:data-[slot=icon]:fill-zinc-950 dark:bg-white/5 dark:*:data-[slot=icon]:fill-white"
     end
-    
+
     classes.join(" ")
   end
 end

@@ -3,15 +3,15 @@
   <div class="-ml-4 flex-1" aria-hidden="true"></div>
   
   <div class="flex items-center gap-3">
-    <% if defined?(current_user) && current_user %>
+    <% if Current.user %>
       <!-- User dropdown would go here -->
       <div class="relative flex min-w-0 items-center gap-3 rounded-lg p-2 text-left text-base/6 font-medium text-zinc-950 dark:text-white">
         <div class="size-7 rounded-lg bg-zinc-900 dark:bg-zinc-700 flex items-center justify-center">
-          <span class="text-white text-sm font-bold"><%= current_user.email[0].upcase %></span>
+          <span class="text-white text-sm font-bold"><%= Current.user.email[0].upcase %></span>
         </div>
       </div>
     <% else %>
-      <%= link_to "Login", login_path, class: "text-zinc-950 hover:text-zinc-700 dark:text-white dark:hover:text-zinc-300 text-sm font-medium" %>
+      <%= link_to "Login", new_session_path, class: "text-zinc-950 hover:text-zinc-700 dark:text-white dark:hover:text-zinc-300 text-sm font-medium" %>
     <% end %>
   </div>
 </nav>

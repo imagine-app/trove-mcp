@@ -63,16 +63,16 @@
 
   <!-- Sidebar Footer -->
   <div class="flex flex-col border-t border-zinc-950/5 p-4 dark:border-white/5 max-lg:hidden">
-    <% if defined?(current_user) && current_user %>
+    <% if Current.user %>
       <div class="flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left text-base/6 font-medium text-zinc-950 dark:text-white">
         <span class="flex min-w-0 items-center gap-3">
           <div class="size-10 rounded-lg bg-zinc-900 dark:bg-zinc-700 flex items-center justify-center">
-            <span class="text-white text-sm font-bold"><%= current_user.email[0].upcase %></span>
+            <span class="text-white text-sm font-bold"><%= Current.user.email[0].upcase %></span>
           </div>
           <span class="min-w-0">
             <span class="block truncate text-sm/5 font-medium text-zinc-950 dark:text-white">User</span>
             <span class="block truncate text-xs/5 font-normal text-zinc-500 dark:text-zinc-400">
-              <%= current_user.email %>
+              <%= Current.user.email %>
             </span>
           </span>
         </span>

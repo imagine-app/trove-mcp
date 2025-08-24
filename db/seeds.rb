@@ -21,12 +21,12 @@ User.destroy_all
 # Create users
 puts "Creating users..."
 user_raphael = User.create!(
-  email: "raphael@imagine-app.fr",
+  email_address: "raphael@imagine-app.fr",
   password: "testtest"
 )
 
 user_marie = User.create!(
-  email: "marie@example.com",
+  email_address: "marie@example.com",
   password: "testtest"
 )
 

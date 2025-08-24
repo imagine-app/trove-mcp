@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_23_215344) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_24_142010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -146,12 +146,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_23_215344) do
     t.index ["context_id"], name: "index_prompts_on_context_id"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.string "ip_address"
+    t.string "user_agent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_sessions_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "email", null: false
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.string "email_address", null: false
+    t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
   create_table "vaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -171,4 +180,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_23_215344) do
   add_foreign_key "memberships", "users"
   add_foreign_key "memberships", "vaults"
   add_foreign_key "prompts", "contexts"
+  add_foreign_key "sessions", "users"
 end

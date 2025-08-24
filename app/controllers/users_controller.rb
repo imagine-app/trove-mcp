@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
-  layout "auth", only: [:new]
-  
+  layout "auth", only: [ :new ]
+
   def new
     @user = User.new
   end
 
   def create
     @user = User.new(user_params)
-    
+
     if @user.save
       redirect_to login_path, notice: "Account created successfully! Please log in."
     else
