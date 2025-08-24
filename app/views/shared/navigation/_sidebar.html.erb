@@ -1,0 +1,85 @@
+<!-- Sidebar Component -->
+<nav class="flex h-full min-h-0 flex-col">
+  <!-- Sidebar Header -->
+  <div class="flex flex-col border-b border-zinc-950/5 p-4 dark:border-white/5">
+    <div class="flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left text-base/6 font-medium text-zinc-950 dark:text-white">
+      <div class="size-7 rounded-md bg-zinc-900 dark:bg-zinc-700 flex items-center justify-center">
+        <span class="text-white text-sm font-bold">T</span>
+      </div>
+      <span class="truncate">TROVE</span>
+      <svg data-slot="icon" viewBox="0 0 16 16" class="size-4 fill-zinc-500 dark:fill-zinc-400 ml-auto">
+        <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+      </svg>
+    </div>
+  </div>
+
+  <!-- Sidebar Body -->
+  <div class="flex flex-1 flex-col overflow-y-auto p-4">
+    <!-- Main Navigation Section -->
+    <div class="flex flex-col gap-0.5">
+      <%= link_to root_path, class: sidebar_item_classes(request.path == '/') do %>
+        <svg data-slot="icon" viewBox="0 0 20 20" class="size-6 shrink-0 fill-zinc-500 sm:size-5">
+          <path fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z" clip-rule="evenodd" />
+        </svg>
+        <span class="truncate">Home</span>
+      <% end %>
+
+      <%= link_to vaults_path, class: sidebar_item_classes(request.path.start_with?('/vaults')) do %>
+        <svg data-slot="icon" viewBox="0 0 20 20" class="size-6 shrink-0 fill-zinc-500 sm:size-5">
+          <path fill-rule="evenodd" d="M4.5 2A1.5 1.5 0 0 0 3 3.5v13A1.5 1.5 0 0 0 4.5 18h11a1.5 1.5 0 0 0 1.5-1.5V7.621a1.5 1.5 0 0 0-.44-1.06l-4.12-4.122A1.5 1.5 0 0 0 11.378 2H4.5Zm2.25 8.5a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 3a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z" clip-rule="evenodd" />
+        </svg>
+        <span class="truncate">Vaults</span>
+      <% end %>
+
+      <%= link_to entries_path, class: sidebar_item_classes(request.path.start_with?('/entries')) do %>
+        <svg data-slot="icon" viewBox="0 0 20 20" class="size-6 shrink-0 fill-zinc-500 sm:size-5">
+          <path fill-rule="evenodd" d="M3 4.25A2.25 2.25 0 0 1 5.25 2h5.5A2.25 2.25 0 0 1 13 4.25v2a.75.75 0 0 1-1.5 0v-2a.75.75 0 0 0-.75-.75h-5.5a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75h5.5a.75.75 0 0 0 .75-.75v-2a.75.75 0 0 1 1.5 0v2A2.25 2.25 0 0 1 10.75 18h-5.5A2.25 2.25 0 0 1 3 15.75V4.25Z" clip-rule="evenodd" />
+          <path fill-rule="evenodd" d="m19 10-.75.75-3-3a.75.75 0 0 0-1.06 1.06L16.19 10l-2 2a.75.75 0 1 0 1.06 1.06l3-3L19 10Z" clip-rule="evenodd" />
+        </svg>
+        <span class="truncate">Entries</span>
+      <% end %>
+
+      <%= link_to contexts_path, class: sidebar_item_classes(request.path.start_with?('/contexts')) do %>
+        <svg data-slot="icon" viewBox="0 0 20 20" class="size-6 shrink-0 fill-zinc-500 sm:size-5">
+          <path fill-rule="evenodd" d="M2 4.25A2.25 2.25 0 0 1 4.25 2h11.5A2.25 2.25 0 0 1 18 4.25v8.5A2.25 2.25 0 0 1 15.75 15h-3.105a3.501 3.501 0 0 1-1.27 1.705l-.715.715A1.5 1.5 0 0 1 9.598 18H8.5A2.5 2.5 0 0 1 6 15.5v-1.25a.75.75 0 0 1 1.5 0v1.25a1 1 0 0 0 1 1h1.098L12 14.098V13.5h3.75a.75.75 0 0 0 .75-.75v-8.5a.75.75 0 0 0-.75-.75H4.25a.75.75 0 0 0-.75.75v8.5c0 .414.336.75.75.75H6v2a.75.75 0 0 1-1.5 0v-2H4.25A2.25 2.25 0 0 1 2 12.75v-8.5Z" clip-rule="evenodd" />
+        </svg>
+        <span class="truncate">Contexts</span>
+      <% end %>
+    </div>
+
+    <!-- Spacer -->
+    <div aria-hidden="true" class="mt-8 flex-1"></div>
+
+    <!-- Bottom Section -->
+    <div class="flex flex-col gap-0.5">
+      <%= link_to "#", class: sidebar_item_classes(false) do %>
+        <svg data-slot="icon" viewBox="0 0 20 20" class="size-6 shrink-0 fill-zinc-500 sm:size-5">
+          <path fill-rule="evenodd" d="M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0ZM8.94 6.94a.75.75 0 1 1-1.061-1.061 3 3 0 1 1 2.871 5.026v.345a.75.75 0 0 1-1.5 0v-.5c0-.72.57-1.3 1.25-1.3a1.5 1.5 0 1 0-1.06-2.56ZM10 15a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd" />
+        </svg>
+        <span class="truncate">Support</span>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Sidebar Footer -->
+  <div class="flex flex-col border-t border-zinc-950/5 p-4 dark:border-white/5 max-lg:hidden">
+    <% if defined?(current_user) && current_user %>
+      <div class="flex w-full items-center gap-3 rounded-lg px-2 py-2.5 text-left text-base/6 font-medium text-zinc-950 dark:text-white">
+        <span class="flex min-w-0 items-center gap-3">
+          <div class="size-10 rounded-lg bg-zinc-900 dark:bg-zinc-700 flex items-center justify-center">
+            <span class="text-white text-sm font-bold"><%= current_user.email[0].upcase %></span>
+          </div>
+          <span class="min-w-0">
+            <span class="block truncate text-sm/5 font-medium text-zinc-950 dark:text-white">User</span>
+            <span class="block truncate text-xs/5 font-normal text-zinc-500 dark:text-zinc-400">
+              <%= current_user.email %>
+            </span>
+          </span>
+        </span>
+        <svg data-slot="icon" viewBox="0 0 16 16" class="size-5 fill-zinc-500 dark:fill-zinc-400 ml-auto">
+          <path fill-rule="evenodd" d="M11.78 9.78a.75.75 0 0 1-1.06 0L8 7.06 5.28 9.78a.75.75 0 0 1-1.06-1.06l3.25-3.25a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" />
+        </svg>
+      </div>
+    <% end %>
+  </div>
+</nav>
