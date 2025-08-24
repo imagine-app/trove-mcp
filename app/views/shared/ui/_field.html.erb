@@ -1,0 +1,28 @@
+<%
+  # Field component adapted from Catalyst
+  # Usage: <%= render "shared/ui/field", label: "Email", classes: "" do %>
+  #   <%= render "shared/ui/input", type: "email", name: "email" %>
+  # <% end %>
+  
+  label = local_assigns[:label] || ""
+  classes = local_assigns[:classes] || ""
+  
+  field_classes = [
+    "[&>[data-slot=label]+[data-slot=control]]:mt-3",
+    "[&>[data-slot=label]+[data-slot=description]]:mt-1", 
+    "[&>[data-slot=description]+[data-slot=control]]:mt-3",
+    "[&>[data-slot=control]+[data-slot=description]]:mt-3",
+    "[&>[data-slot=control]+[data-slot=error]]:mt-3",
+    "*:data-[slot=label]:font-medium",
+    classes
+  ].join(" ")
+%>
+
+<div class="<%= field_classes %>">
+  <% if label.present? %>
+    <%= render "shared/ui/label", content: label %>
+  <% end %>
+  <div data-slot="control">
+    <%= yield %>
+  </div>
+</div>

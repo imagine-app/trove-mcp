@@ -1,0 +1,17 @@
+<%
+  # Label component adapted from Catalyst
+  # Usage: <%= render "shared/ui/label", content: "Email", for_field: "email", classes: "" %>
+  
+  content = local_assigns[:content] || ""
+  for_field = local_assigns[:for_field] || ""
+  classes = local_assigns[:classes] || ""
+  
+  label_classes = [
+    "text-base/6 text-zinc-950 select-none sm:text-sm/6 dark:text-white font-medium",
+    classes
+  ].join(" ")
+%>
+
+<label <% if for_field.present? %>for="<%= for_field %>"<% end %> data-slot="label" class="<%= label_classes %>">
+  <%= content %>
+</label>

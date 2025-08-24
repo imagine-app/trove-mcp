@@ -1,0 +1,66 @@
+<%
+  # Button component adapted from Catalyst
+  # Usage: <%= render "shared/ui/button", text: "Login", type: "submit", color: "blue", classes: "w-full" %>
+  
+  text = local_assigns[:text] || "Button"
+  type = local_assigns[:type] || "button"
+  color = local_assigns[:color] || "dark"
+  outline = local_assigns[:outline] || false
+  plain = local_assigns[:plain] || false
+  classes = local_assigns[:classes] || ""
+  href = local_assigns[:href] || nil
+  
+  base_classes = [
+    "relative isolate inline-flex items-baseline justify-center gap-x-2 rounded-lg border text-base/6 font-semibold",
+    "px-[calc(theme(spacing.3.5)-1px)] py-[calc(theme(spacing.2.5)-1px)] sm:px-[calc(theme(spacing.3)-1px)] sm:py-[calc(theme(spacing.1.5)-1px)] sm:text-sm/6",
+    "focus:outline-hidden focus:outline-2 focus:outline-offset-2 focus:outline-blue-500",
+    "disabled:opacity-50"
+  ]
+  
+  if outline
+    style_classes = [
+      "border-zinc-950/10 text-zinc-950 hover:bg-zinc-950/2.5 active:bg-zinc-950/2.5",
+      "dark:border-white/15 dark:text-white dark:hover:bg-white/5 dark:active:bg-white/5"
+    ]
+  elsif plain
+    style_classes = [
+      "border-transparent text-zinc-950 hover:bg-zinc-950/5 active:bg-zinc-950/5",
+      "dark:text-white dark:hover:bg-white/10 dark:active:bg-white/10"
+    ]
+  else
+    case color
+    when "blue"
+      style_classes = [
+        "text-white bg-blue-600 border-blue-700/90 hover:bg-blue-700 active:bg-blue-700",
+        "shadow-sm"
+      ]
+    when "green"
+      style_classes = [
+        "text-white bg-green-600 border-green-700/90 hover:bg-green-700 active:bg-green-700",
+        "shadow-sm"
+      ]
+    when "red"
+      style_classes = [
+        "text-white bg-red-600 border-red-700/90 hover:bg-red-700 active:bg-red-700",
+        "shadow-sm"
+      ]
+    else
+      style_classes = [
+        "text-white bg-zinc-900 border-zinc-950/90 hover:bg-zinc-800 active:bg-zinc-800",
+        "dark:bg-zinc-600 shadow-sm"
+      ]
+    end
+  end
+  
+  all_classes = (base_classes + style_classes + [classes]).join(" ")
+%>
+
+<% if href %>
+  <%= link_to href, class: all_classes do %>
+    <%= text %>
+  <% end %>
+<% else %>
+  <button type="<%= type %>" class="<%= all_classes %>">
+    <%= text %>
+  </button>
+<% end %>

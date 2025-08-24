@@ -12,4 +12,4 @@ Turbo.start()
 import * as ActiveStorage from '@rails/activestorage'
 ActiveStorage.start()
 
-console.log('Vite ⚡️ Rails - Trove MCP')
+console.log('Vite ⚡️ Rails - Trove MCP - Rebuilt')

@@ -1,0 +1,40 @@
+<%
+  # Text components adapted from Catalyst
+  # Usage: 
+  # <%= render "shared/ui/text", content: "Some text", classes: "" %>
+  # <%= render "shared/ui/text", content: "Link text", href: "/path", classes: "" %>
+  # <%= render "shared/ui/text", content: "Strong text", strong: true, classes: "" %>
+  
+  content ||= ""
+  classes ||= ""
+  href ||= nil
+  strong ||= false
+  
+  if href
+    # TextLink component
+    link_classes = [
+      "text-zinc-950 underline decoration-zinc-950/50 hover:decoration-zinc-950 dark:text-white dark:decoration-white/50 dark:hover:decoration-white",
+      classes
+    ].join(" ")
+  elsif strong
+    # Strong component  
+    strong_classes = [
+      "font-medium text-zinc-950 dark:text-white",
+      classes
+    ].join(" ")
+  else
+    # Regular Text component
+    text_classes = [
+      "text-base/6 text-zinc-500 sm:text-sm/6 dark:text-zinc-400",
+      classes
+    ].join(" ")
+  end
+%>
+
+<% if href %>
+  <%= link_to content, href, class: link_classes %>
+<% elsif strong %>
+  <strong class="<%= strong_classes %>"><%= content %></strong>
+<% else %>
+  <p class="<%= text_classes %>"><%= content %></p>
+<% end %>

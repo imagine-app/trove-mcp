@@ -1,0 +1,16 @@
+<%
+  content = local_assigns[:content] || ""
+  level = local_assigns[:level] || 1
+  classes = local_assigns[:classes] || ""
+  
+  css_classes = [
+    "text-2xl/8 font-semibold text-zinc-950 sm:text-xl/8 dark:text-white",
+    classes
+  ].join(" ")
+  
+  tag = "h#{level}"
+%>
+
+<<%= tag %> class="<%= css_classes %>">
+  <%= content %>
+</<%= tag %>>

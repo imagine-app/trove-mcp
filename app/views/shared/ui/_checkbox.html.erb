@@ -1,0 +1,44 @@
+<%
+  # Checkbox component adapted from Catalyst  
+  # Usage: <%= render "shared/ui/checkbox", name: "remember", label: "Remember me", classes: "" %>
+  
+  name = local_assigns[:name] || ""
+  label = local_assigns[:label] || ""
+  classes = local_assigns[:classes] || ""
+  checked = local_assigns[:checked] || false
+  
+  checkbox_classes = [
+    "relative isolate flex size-4.5 items-center justify-center rounded-[0.3125rem] sm:size-4",
+    "before:absolute before:inset-0 before:-z-10 before:rounded-[calc(0.3125rem-1px)] before:bg-white before:shadow-sm",
+    "dark:before:hidden dark:bg-white/5",
+    "border border-zinc-950/15 hover:border-zinc-950/30",
+    "dark:border-white/15 dark:hover:border-white/30",
+    "focus:outline-2 focus:outline-offset-2 focus:outline-blue-500",
+    "checked:bg-blue-600 checked:border-blue-600 checked:before:bg-blue-600",
+    "dark:checked:bg-blue-500 dark:checked:border-blue-500"
+  ].join(" ")
+  
+  field_classes = [
+    "grid grid-cols-[1.125rem_1fr] gap-x-4 gap-y-1 sm:grid-cols-[1rem_1fr]",
+    classes
+  ].join(" ")
+  
+  label_classes = [
+    "text-base/6 text-zinc-950 select-none sm:text-sm/6 dark:text-white font-medium"
+  ].join(" ")
+%>
+
+<div class="<%= field_classes %>">
+  <input 
+    type="checkbox" 
+    name="<%= name %>" 
+    id="<%= name %>"
+    <% if checked %>checked<% end %>
+    class="<%= checkbox_classes %>"
+  />
+  <% if label.present? %>
+    <label for="<%= name %>" class="<%= label_classes %>">
+      <%= label %>
+    </label>
+  <% end %>
+</div>
